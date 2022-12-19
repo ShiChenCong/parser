@@ -1,4 +1,7 @@
+mod lexer;
 mod reader;
+mod token;
+mod word;
 
 fn main() {
     let js_str = include_str!("./a.js");
