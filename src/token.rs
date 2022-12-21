@@ -4,4 +4,6 @@ use crate::word::Reserved;
 pub enum TokenData {
     Reserved(Reserved),
     Equal,
+
+    Identifier,
 }
