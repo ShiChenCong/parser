@@ -1,7 +1,9 @@
+use crate::word;
 use crate::{reader::Reader, word::Word};
 
 pub struct Lexer<I> {
     pub reader: Reader<I>,
+    wordmap: word::Map,
 }
 
 impl<I> Lexer<I>
@@ -11,6 +13,7 @@ where
     pub fn new(chars: I) -> Lexer<I> {
         Lexer {
             reader: Reader::new(chars),
+            wordmap: word::Map::new(),
         }
     }
 
@@ -31,7 +34,7 @@ where
     fn read_word(&mut self) {
         let s = self.read_word_parts();
         if let Ok(text) = s {
-            println!("读取到的是{}", text.text)
+            self.wordmap.tokenize(text);
         }
     }
 

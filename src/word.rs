@@ -70,10 +70,14 @@ impl Map {
         }
     }
 
-    pub fn tokenize(&self, s: Word) {
-        match self.reserved.get(&s.text[..]) {
+    pub fn tokenize(&self, s: Word) -> Result<TokenData, ()> {
+        Ok(match self.reserved.get(&s.text[..]) {
+            // 关键字 或者 符号
             Some(&word) => TokenData::Reserved(word),
-            None => TokenData::Identifier,
-        };
+            None => {
+                // 那就是变量名
+                TokenData::Identifier(s.text)
+            }
+        })
     }
 }

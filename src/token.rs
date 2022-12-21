@@ -5,5 +5,5 @@ pub enum TokenData {
     Reserved(Reserved),
     Equal,
 
-    Identifier,
+    Identifier(String),
 }
