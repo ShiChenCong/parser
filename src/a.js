@@ -1,3 +1,1 @@
-;
-const a = [1, 2, 3]
-console.log(a)
+const a = 1;

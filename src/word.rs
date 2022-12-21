@@ -1,3 +1,16 @@
+pub struct Word {
+    had_escape: bool,
+    pub text: String,
+}
+
+impl Word {
+    pub fn new() -> Self {
+        Word {
+            had_escape: false,
+            text: String::new(),
+        }
+    }
+}
 // 关键字
 pub enum Reserved {
     Null,
