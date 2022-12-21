@@ -20,7 +20,7 @@ where
         println!("{:?}", self.ahead)
     }
 
-    // 读取几个char
+    // 读取几个char 不会影响next的调用
     pub fn peek(&mut self, n: usize) -> Option<char> {
         for _ in self.ahead.len()..(n + 1) {
             match self.chars.next() {
@@ -50,6 +50,7 @@ where
         // } else {
         //     println!("{}", current_char.unwrap())
         // }
+        // println!("{}", current_char.unwrap());
         // 需要判断是不是换行
         current_char
     }

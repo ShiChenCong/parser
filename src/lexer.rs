@@ -1,7 +1,7 @@
 use crate::{reader::Reader, word::Word};
 
 pub struct Lexer<I> {
-    reader: Reader<I>,
+    pub reader: Reader<I>,
 }
 
 impl<I> Lexer<I>
@@ -16,7 +16,7 @@ where
 
     //  取一个char
     fn peek(&mut self) -> Option<char> {
-        self.reader.next()
+        self.reader.peek(0)
     }
 
     // 取两个char
@@ -63,9 +63,7 @@ where
         loop {
             match self.peek() {
                 Some(ch) if pred(ch) => return Ok(()),
-                Some(_) => {
-                    read(self)?;
-                }
+                Some(_) => read(self)?,
                 None => return Ok(()),
             }
         }

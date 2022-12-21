@@ -14,7 +14,10 @@ fn main() {
     // let a = Lexer {
     //     reader: Reader::new(js_str.chars()),
     // };
-    // a.peek(10);
+    // a.reader.peek(5);
+    // a.reader.next();
+    // a.reader.next();
+    // a.(0);
     // a.next();
     // a.next();
     // a.next();
