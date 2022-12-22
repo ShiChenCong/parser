@@ -16,7 +16,7 @@ impl Word {
     }
 }
 // 关键字
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub enum Reserved {
     Null,
     True,

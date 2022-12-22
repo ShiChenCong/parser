@@ -19,7 +19,9 @@ where
 
     //  取一个char
     fn peek(&mut self) -> Option<char> {
-        self.reader.peek(0)
+        let a = self.reader.peek(0);
+        println!("{:?}", a);
+        a
     }
 
     // 取两个char
@@ -34,7 +36,8 @@ where
     fn read_word(&mut self) {
         let s = self.read_word_parts();
         if let Ok(text) = s {
-            self.wordmap.tokenize(text);
+            let a = self.wordmap.tokenize(text).unwrap();
+            println!("转换后的结果是{:?}", a);
         }
     }
 
@@ -49,7 +52,6 @@ where
             &mut |this| match this.read() {
                 '\\' => Ok(()),
                 ch => {
-                    println!("{}", ch);
                     s.text.push(ch);
                     Ok(())
                 }
@@ -66,7 +68,9 @@ where
         loop {
             match self.peek() {
                 Some(ch) if pred(ch) => return Ok(()),
-                Some(_) => read(self)?,
+                Some(_) => {
+                    read(self)?;
+                }
                 None => return Ok(()),
             }
         }
@@ -75,6 +79,7 @@ where
     pub fn read_token(&mut self) {
         // 为什么需要读取两个， 因为符号是两个 // <! 等
         let pair = self.peek2();
+        // println!("{:?}", pair);
         // 先判断是不是数字 再判断是不是
         let result = match pair {
             // 如果是数字
