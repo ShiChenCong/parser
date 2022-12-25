@@ -1,3 +1,6 @@
+use std::process;
+
+use crate::token::TokenData;
 use crate::word;
 use crate::{reader::Reader, word::Word};
 
@@ -31,12 +34,9 @@ where
         self.reader.next().unwrap()
     }
 
-    fn read_word(&mut self) {
-        let s = self.read_word_parts();
-        if let Ok(text) = s {
-            let a = self.wordmap.tokenize(text).unwrap();
-            println!("转换后的结果是{:?}", a);
-        }
+    fn read_word(&mut self) -> Result<TokenData, ()> {
+        let s = self.read_word_parts().unwrap();
+        self.wordmap.tokenize(s)
     }
 
     // 读取完整的一个word
@@ -77,17 +77,25 @@ where
         }
     }
 
-    pub fn read_token(&mut self) {
+    pub fn start(&mut self) {
+        loop {
+            let res = self.read_token().unwrap();
+            println!("{:?}", res);
+        }
+    }
+
+    pub fn read_token(&mut self) -> Result<TokenData, ()> {
         // 为什么需要读取两个， 因为符号是两个 // <! 等
         let pair = self.peek2();
-        // println!("{:?}", pair);
         // 先判断是不是数字 再判断是不是
         let result = match pair {
             // 如果是数字
             (Some(_ch), _) => self.read_word(),
             // 如果是关键字或者identifier
-            // (Some(ch), _) => self.read_word(),
-            (None, _) => {}
+            (None, _) => {
+                println!("end");
+                process::exit(1);
+            }
         };
         result
     }
