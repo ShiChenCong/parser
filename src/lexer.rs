@@ -65,7 +65,10 @@ where
     {
         loop {
             match self.peek() {
-                Some(ch) if pred(ch) => return Ok(()),
+                Some(ch) if pred(ch) => {
+                    self.reader.next();
+                    return Ok(());
+                }
                 Some(_) => {
                     read(self)?;
                 }

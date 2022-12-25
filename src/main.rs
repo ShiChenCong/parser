@@ -11,10 +11,6 @@ fn main() {
     // let mut a = reader::Reader::new(js_str.chars());
     let mut a = Lexer::new(js_str.chars());
     a.read_token();
-    a.reader.next();
     a.read_token();
-    a.reader.next();
-    a.read_token();
-    a.reader.next();
     a.read_token();
 }
