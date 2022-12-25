@@ -1,11 +1,15 @@
 use crate::word::Reserved;
 
-// 符号
+// 集合
 #[derive(Debug)]
 pub enum TokenData {
     Reserved(Reserved),
-    Equal,
-    WhiteSpace,
-
+    Token(Token),
     Identifier(String),
+}
+
+// 符号
+#[derive(Clone, Copy, Debug)]
+pub enum Token {
+    Equal,
 }

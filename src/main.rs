@@ -13,4 +13,8 @@ fn main() {
     a.read_token();
     a.reader.next();
     a.read_token();
+    a.reader.next();
+    a.read_token();
+    a.reader.next();
+    a.read_token();
 }

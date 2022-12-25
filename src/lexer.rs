@@ -19,9 +19,7 @@ where
 
     //  取一个char
     fn peek(&mut self) -> Option<char> {
-        let a = self.reader.peek(0);
-        println!("{:?}", a);
-        a
+        self.reader.peek(0)
     }
 
     // 取两个char

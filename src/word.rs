@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::token::TokenData;
+use crate::token::{Token, TokenData};
 
 pub struct Word {
     had_escape: bool,
@@ -53,6 +53,7 @@ macro_rules! wordmap{
 
 pub struct Map {
     reserved: HashMap<&'static str, Reserved>,
+    token: HashMap<&'static str, Token>,
 }
 
 impl Map {
@@ -67,17 +68,17 @@ impl Map {
                     ("const", Const)
                 ]
             ),
+            token: wordmap!(Token, [("=", Equal)]),
         }
     }
 
     pub fn tokenize(&self, s: Word) -> Result<TokenData, ()> {
         Ok(match self.reserved.get(&s.text[..]) {
-            // 关键字 或者 符号
             Some(&word) => TokenData::Reserved(word),
-            None => {
-                // 那就是变量名
-                TokenData::Identifier(s.text)
-            }
+            None => match self.token.get(&s.text[..]) {
+                Some(&scc) => TokenData::Token(scc),
+                None => TokenData::Identifier(s.text),
+            },
         })
     }
 }
