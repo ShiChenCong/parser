@@ -84,13 +84,32 @@ where
         }
     }
 
+    pub fn is_digit(&self, c: char) -> bool {
+        c.is_numeric()
+    }
+
+    // 读取一个完整的数字
+    pub fn read_digit(&mut self) -> Result<Word, ()> {
+        let mut word = Word::new();
+        // 一直next 直到不是数字或者.
+        self.read_until_with(|c| !c.is_numeric(), &mut |this| {
+            let a = this.read();
+            word.text.push(a);
+            Ok(())
+        })?;
+        Ok(word)
+    }
+
     pub fn read_token(&mut self) -> Result<TokenData, ()> {
         // 为什么需要读取两个， 因为符号是两个 // <! 等
         let pair = self.peek2();
         // 先判断是不是数字 再判断是不是
         let result = match pair {
-            // 如果是数字
-            (Some(_ch), _) => self.read_word(),
+            (Some(ch), _) if self.is_digit(ch) => {
+                println!("数字是{}", ch);
+                self.read_word()
+            }
+            (Some(ch), _) => self.read_word(),
             // 如果是关键字或者identifier
             (None, _) => {
                 println!("end");
