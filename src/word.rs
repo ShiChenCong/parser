@@ -68,7 +68,7 @@ impl Map {
                     ("const", Const)
                 ]
             ),
-            token: wordmap!(Token, [("=", Equal)]),
+            token: wordmap!(Token, [("=", Equal), (";", SEMICOLON)]),
         }
     }
 

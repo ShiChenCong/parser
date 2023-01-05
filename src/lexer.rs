@@ -80,7 +80,7 @@ where
     pub fn start(&mut self) {
         loop {
             let res = self.read_token().unwrap();
-            println!("{:?}", res);
+            // println!("{:?}", res);
         }
     }
 
@@ -89,7 +89,7 @@ where
     }
 
     // 读取一个完整的数字
-    pub fn read_digit(&mut self) -> Result<Word, ()> {
+    pub fn read_digit(&mut self) -> Result<TokenData, ()> {
         let mut word = Word::new();
         // 一直next 直到不是数字或者.
         self.read_until_with(|c| !c.is_numeric(), &mut |this| {
@@ -97,7 +97,7 @@ where
             word.text.push(a);
             Ok(())
         })?;
-        Ok(word)
+        Ok(TokenData::Integer(word.text.parse::<isize>().unwrap()))
     }
 
     pub fn read_token(&mut self) -> Result<TokenData, ()> {
@@ -105,14 +105,10 @@ where
         let pair = self.peek2();
         // 先判断是不是数字 再判断是不是
         let result = match pair {
-            (Some(ch), _) if self.is_digit(ch) => {
-                println!("数字是{}", ch);
-                self.read_word()
-            }
+            (Some(ch), _) if self.is_digit(ch) => self.read_digit(),
             (Some(ch), _) => self.read_word(),
             // 如果是关键字或者identifier
             (None, _) => {
-                println!("end");
                 process::exit(1);
             }
         };
