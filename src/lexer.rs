@@ -58,29 +58,10 @@ where
         Ok(s)
     }
 
-    fn read_until_with<F, G>(&mut self, pred: F, read: &mut G) -> Result<(), ()>
-    where
-        F: Fn(char) -> bool,
-        G: FnMut(&mut Self) -> Result<(), ()>,
-    {
-        loop {
-            match self.peek() {
-                Some(ch) if pred(ch) => {
-                    self.reader.next();
-                    return Ok(());
-                }
-                Some(_) => {
-                    read(self)?;
-                }
-                None => return Ok(()),
-            }
-        }
-    }
-
     pub fn start(&mut self) {
         loop {
             let res = self.read_token().unwrap();
-            // println!("{:?}", res);
+            println!("{:?}", res);
         }
     }
 
@@ -98,6 +79,27 @@ where
             Ok(())
         })?;
         Ok(TokenData::Integer(word.text.parse::<isize>().unwrap()))
+    }
+
+    fn read_until_with<F, G>(&mut self, pred: F, read: &mut G) -> Result<(), ()>
+    where
+        F: Fn(char) -> bool,
+        G: FnMut(&mut Self) -> Result<(), ()>,
+    {
+        loop {
+            match self.peek() {
+                Some(ch) if pred(ch) => {
+                    if ch.is_whitespace() {
+                        self.reader.next();
+                    }
+                    return Ok(());
+                }
+                Some(_) => {
+                    read(self)?;
+                }
+                None => return Ok(()),
+            }
+        }
     }
 
     pub fn read_token(&mut self) -> Result<TokenData, ()> {
