@@ -7,6 +7,7 @@ use crate::{reader::Reader, word::Word};
 pub struct Lexer<I> {
     pub reader: Reader<I>,
     wordmap: word::Map,
+    resultList: Vec<TokenData>,
 }
 
 impl<I> Lexer<I>
@@ -17,6 +18,7 @@ where
         Lexer {
             reader: Reader::new(chars),
             wordmap: word::Map::new(),
+            resultList: vec![],
         }
     }
 
@@ -61,7 +63,7 @@ where
     pub fn start(&mut self) {
         loop {
             let res = self.read_token().unwrap();
-            println!("{:?}", res);
+            self.resultList.push(res);
         }
     }
 
@@ -111,6 +113,7 @@ where
             (Some(ch), _) => self.read_word(),
             // 如果是关键字或者identifier
             (None, _) => {
+                println!("{:?}", self.resultList);
                 process::exit(1);
             }
         };
