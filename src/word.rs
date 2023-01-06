@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use crate::token::{Token, TokenData};
 
+#[allow(unused)]
 pub struct Word {
     had_escape: bool,
     pub text: String,
@@ -24,6 +25,7 @@ pub enum Reserved {
     Const,
 }
 
+#[allow(unused)]
 impl Reserved {
     pub fn name(&self) -> &str {
         match self {

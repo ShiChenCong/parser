@@ -5,6 +5,7 @@ pub struct Reader<I> {
     ahead: VecDeque<char>,
 }
 
+#[allow(unused)]
 impl<I> Reader<I>
 where
     I: Iterator<Item = char>,

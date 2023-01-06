@@ -7,7 +7,7 @@ use crate::{reader::Reader, word::Word};
 pub struct Lexer<I> {
     pub reader: Reader<I>,
     wordmap: word::Map,
-    resultList: Vec<TokenData>,
+    result_list: Vec<TokenData>,
 }
 
 impl<I> Lexer<I>
@@ -18,7 +18,7 @@ where
         Lexer {
             reader: Reader::new(chars),
             wordmap: word::Map::new(),
-            resultList: vec![],
+            result_list: vec![],
         }
     }
 
@@ -63,7 +63,7 @@ where
     pub fn start(&mut self) {
         loop {
             let res = self.read_token().unwrap();
-            self.resultList.push(res);
+            self.result_list.push(res);
         }
     }
 
@@ -110,10 +110,10 @@ where
         // 先判断是不是数字 再判断是不是
         let result = match pair {
             (Some(ch), _) if self.is_digit(ch) => self.read_digit(),
-            (Some(ch), _) => self.read_word(),
+            (Some(_ch), _) => self.read_word(),
             // 如果是关键字或者identifier
             (None, _) => {
-                println!("{:?}", self.resultList);
+                println!("{:?}", self.result_list);
                 process::exit(1);
             }
         };

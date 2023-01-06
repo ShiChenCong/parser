@@ -1,5 +1,4 @@
 use lexer::Lexer;
-use reader::Reader;
 
 mod lexer;
 mod reader;
