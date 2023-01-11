@@ -11,3 +11,11 @@ fn main() {
     let mut a = Lexer::new(js_str.chars());
     a.start();
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+    }
+}
